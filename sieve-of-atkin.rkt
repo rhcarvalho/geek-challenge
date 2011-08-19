@@ -1,10 +1,13 @@
 #lang racket/base
-; from http://programmingpraxis.com/2010/02/19/sieve-of-atkin-improved/2/
+;; from http://programmingpraxis.com/2010/02/19/sieve-of-atkin-improved/2/
 
 (require racket/cmdline)
 
-; TODO: write results to file, and don't keep a huge list in memory 
-
+#| TODO:
+  * write results to file
+  * don't keep a huge list in memory
+  * use unsafe operations
+|#
 
 (define (atkin limit)
   (define (exact x) (inexact->exact (floor x)))

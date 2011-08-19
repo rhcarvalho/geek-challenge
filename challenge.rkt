@@ -34,3 +34,13 @@
 
 (printf "First palindromic prime to appear in pi:\n~a\n"
         (cadar (sort p7p/indexed < #:key caaar)))
+
+
+;; Second stage: solve for 11 and 13 digits
+#|
+This time it is impractical to list primes of 11 and 13 digits,
+so I shall approach the problem differently.
+Rather than filtering 11-digit palindromic primes, I can scan for
+11-digit palindromes in pi, and check whether they are prime numbers.
+I can do that, since I have 7-digit primes already.
+|#
