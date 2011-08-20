@@ -1,4 +1,5 @@
-#lang racket
+#lang racket/base
+(require racket/function)
 
 ;; Second stage: solve challenge for 11 and 13 digits
 #|
@@ -40,10 +41,9 @@ I can do that, since I have 7-digit primes already.
   (compose1 (curry = 0) remainder))
 
 ; number -> boolean
-(define (is-prime? x)
+(define (is-prime? n)
   (not
-   (for/or ([prime (in-list primes/1M)]
-            #:when (> x prime))
-     (divisible? x prime))))
+   (for/or ([prime (stop-before (in-list primes/1M) (curry <= (sqrt n)))])
+     (divisible? n prime))))
 
 (main)
