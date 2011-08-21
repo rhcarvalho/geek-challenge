@@ -1,5 +1,6 @@
 #lang racket/base
-;; from http://programmingpraxis.com/2010/02/19/sieve-of-atkin-improved/2/
+;; based on code from
+;; http://programmingpraxis.com/2010/02/19/sieve-of-atkin-improved/2/
 
 (require racket/cmdline)
 
