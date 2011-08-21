@@ -1,5 +1,6 @@
 #lang racket/base
-(require racket/port racket/list)
+(require racket/list
+         racket/port)
 
 ;; I saw this challenge on a wall at UFRJ
 ;; in the afternoon of 18/Aug/2011.
@@ -19,15 +20,15 @@
 (define (palindromic-primes/7)
   (call-with-input-file "primes1.txt"
     (λ (in)
-      (regexp-match* #px"(\\d)(\\d)(\\d)(\\d)\\3\\2\\1" in))))
+      (regexp-match* #px"([13579])(\\d)(\\d)(\\d)\\3\\2\\1" in))))
 
-; pi as a string of 100,000 digits
+; pi as a byte-string of 100,000 digits
 (define pi
   (call-with-input-file "pi100k.txt"
     (λ (in)
-      (port->string in))))
+      (port->bytes in))))
 
-; string -> number
+; byte-string -> number
 (define (pi-index str)
   (cond
     [(regexp-match-positions str pi) => caar]
