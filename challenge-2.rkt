@@ -36,7 +36,7 @@ I can do that, since I have 7-digit primes already.
     ; overlapping palidromes are considered
     (let ([pos (file-position port)])
       (unless (= 0 pos)
-        (file-position port (- pos (/ (add1 digits) 2)))))
+        (file-position port (- pos (floor (/ (add1 digits) 2))))))
     (let ([odd-palindrome (pregexp (odd-palindrome-pattern digits))]
           [match->number (compose1 string->number bytes->string/utf-8 car)])
       (cond [(regexp-match odd-palindrome port) => match->number]
@@ -76,12 +76,22 @@ I can do that, since I have 7-digit primes already.
         n))))
 
 ; tests
+(define-syntax-rule (test-next-odd-palindrome/gen str digits)
+  (call-with-input-string
+   str
+   (λ (s)
+     (for/list ([i (in-producer (next-odd-palindrome/gen digits) #f s)])
+       i))))
+
 (test
- (call-with-input-string
-  "123457543212345734450605443"
-  (λ (s)
-    (for/list ([i (in-producer (next-odd-palindrome/gen 11) #f s)])
-      i)))
+ (test-next-odd-palindrome/gen "133113566529889" 4)
+ =>
+ '(1331
+   3113
+   5665
+   9889)
+ 
+ (test-next-odd-palindrome/gen "123457543212345734450605443" 11)
  =>
  '(12345754321
    75432123457
