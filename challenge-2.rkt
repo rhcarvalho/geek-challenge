@@ -30,15 +30,15 @@ I can do that, since I have 7-digit primes already.
 
 ; number -> procedure
 (define (next-odd-palindrome/gen digits)
-  ; port -> (or number #f)
-  (λ (port)
-    ; rewind port if necessary, so that
-    ; overlapping palidromes are considered
-    (let ([pos (file-position port)])
-      (unless (= 0 pos)
-        (file-position port (- pos (floor (/ (add1 digits) 2))))))
-    (let ([odd-palindrome (pregexp (odd-palindrome-pattern digits))]
-          [match->number (compose1 string->number bytes->string/utf-8 car)])
+  (let ([odd-palindrome (pregexp (odd-palindrome-pattern digits))]
+        [match->number (compose1 string->number bytes->string/utf-8 car)])
+    ; port -> (or number #f)
+    (λ (port)
+      ; rewind port if necessary, so that
+      ; overlapping palidromes are considered
+      (let ([pos (file-position port)])
+        (unless (= 0 pos)
+          (file-position port (- pos (floor (/ (add1 digits) 2))))))
       (cond [(regexp-match odd-palindrome port) => match->number]
             [else #f]))))
 
